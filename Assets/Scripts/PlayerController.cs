@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private float knockbackTime = 0f;
     private float knockbackDuration = 0.5f;
 
+    [SerializeField] private Transform attackHitbox;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -60,8 +61,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //i  have sprite 
-        if (horizontalInput > 0f) spriteRenderer.flipX = false;
-        else if (horizontalInput < 0f) spriteRenderer.flipX = true;
+        if (horizontalInput > 0f)
+        {
+            spriteRenderer.flipX = false;
+            attackHitbox.localPosition = new Vector3(0.6f, attackHitbox.localPosition.y, attackHitbox.localPosition.z);
+        }
+        else if (horizontalInput < 0f)
+        {
+            spriteRenderer.flipX = true;
+            attackHitbox.localPosition = new Vector3(-0.6f, attackHitbox.localPosition.y, attackHitbox.localPosition.z);
+        }
     }
 
     public void ApplyKnockback(Vector2 force)
