@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack")]
-    [SerializeField] private int damage = 1;
+    //[SerializeField] private int damage = 1;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float attackDuration = 0.5f;
     [SerializeField] private GameObject attackHitbox;

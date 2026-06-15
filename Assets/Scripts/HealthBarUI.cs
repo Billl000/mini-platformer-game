@@ -5,10 +5,13 @@ public class HealthBarUI : MonoBehaviour
 {
     [SerializeField] private Health playerHealth;
     private Slider slider;
+    private TMPro.TextMeshProUGUI healthText;
 
     private void Awake()
     {
         slider = GetComponent<Slider>();
+        healthText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        healthText.text = $"{playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
     }
 
     void Start()
@@ -21,6 +24,8 @@ public class HealthBarUI : MonoBehaviour
     void UpdateHealthBar(float health)
     {
         slider.value = health;
+
+        healthText.text = health.ToString();
     }
 
     void OnDestroy()

@@ -14,9 +14,12 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool movingRight = true;
 
+    private Vector3 currentScale;
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();    
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
+        currentScale = transform.localScale;
     }
     
     // Update is called once per frame
@@ -39,7 +42,9 @@ public class EnemyMovement : MonoBehaviour
     void FlipAxis()
     {
         movingRight = !movingRight;
-        transform.localScale = new Vector3(movingRight ? 1 : -1, 1, 1);
+        Vector3 scale = transform.localScale;
+        scale.x = movingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+        transform.localScale = scale;
     }
 
     void OnDrawGizmosSelected()

@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
         OnHealthChanged?.Invoke(currentHealth / maxHealth);
         if (currentHealth <= 0f)
         {
@@ -42,5 +43,9 @@ public class Health : MonoBehaviour
         OnHealthChanged?.Invoke(1f);
     }
 
-
+    public void SetMaxHealth(int newMax)
+    {
+        maxHealth = newMax;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+    }
 }

@@ -8,7 +8,7 @@ public class EnemyDeath : MonoBehaviour
     {
         health = GetComponent<Health>();
         health.OnDeath += HandleDeath;
-        Debug.Log("Added OnDeath");
+        //Debug.Log("Added OnDeath");
     }
 
     void HandleDeath()
