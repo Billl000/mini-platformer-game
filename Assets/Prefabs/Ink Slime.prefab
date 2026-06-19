@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 8997422393214008944}
   - component: {fileID: 702269116246624664}
   m_Layer: 7
-  m_Name: Ink Enemy
+  m_Name: Ink Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

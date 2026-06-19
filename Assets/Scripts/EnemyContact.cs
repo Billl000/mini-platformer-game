@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class EnemyContact : MonoBehaviour
 {
-    [SerializeField] private int damage = 1;
-    [SerializeField] private float knockbackForce = 20f;
-    [SerializeField] private float knockbackVertical = 20f;
+    [SerializeField] private int damage = 5;
+    [SerializeField] private float knockbackForce = 10f;
+    [SerializeField] private float knockbackVertical = 12f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
