@@ -181,7 +181,7 @@ public class EnemyTracking : MonoBehaviour
         if (losRange > 0f && distanceToPlayer <= losRange)
         {
             Vector2 directionToPlayer = (player.position - transform.position).normalized;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, losRange, obstacleLayer | playerLayer);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, losRange, obstacleLayer);
             if (hit.collider != null && hit.collider.CompareTag("Player"))
             {
                 return true; // Player is within line of sight
@@ -190,6 +190,27 @@ public class EnemyTracking : MonoBehaviour
 
         return false;
 
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, proximityRange);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, losRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        if (wallCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(wallCheck.position, checkRadius);
+        }
+        if (edgeCheck != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(edgeCheck.position, checkRadius);
+        }
     }
 
 
