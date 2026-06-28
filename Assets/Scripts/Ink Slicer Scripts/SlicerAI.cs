@@ -28,6 +28,14 @@ public class SlicerAI : MonoBehaviour
     [SerializeField] private float telegraphDuration = 0.5f; // Duration of the telegraph before attacking
     [SerializeField] private float lungeForce = 10f; // Force applied during the lunge attack
 
+    [Header("Jumping")]
+    [SerializeField] private float jumpForce = 5f; // Force applied when jumping
+    [SerializeField] private float jumpHeightThreshold = 0.8f; //the height diff to determine if it jumps
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius = 0.2f;
+
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Seeker seeker;
@@ -44,6 +52,9 @@ public class SlicerAI : MonoBehaviour
     private Path currentPath;
     private int currentWaypoint = 0;
     private float pathUpdateTimer = 0f;
+
+    private bool isGrounded = false;
+    private bool isJumping = false;
 
     void Awake()
     {
@@ -183,10 +194,32 @@ public class SlicerAI : MonoBehaviour
 
         if (currentWaypoint >= currentPath.vectorPath.Count) return;
 
+        //ground check
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+       
         Vector2 targetPos = currentPath.vectorPath[currentWaypoint];
         float dirX = targetPos.x - rb.position.x;
+        float dirY = targetPos.y - rb.position.y;
 
-        rb.linearVelocity = new Vector2(Mathf.Sign(dirX) * chaseSpeed, rb.linearVelocity.y);
+        bool shouldJump = dirY > jumpHeightThreshold && isGrounded && !isJumping;
+
+        if (shouldJump)
+        {
+            Vector2 jumpDir = new Vector2(Mathf.Sign(dirX), 1f).normalized;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); // Reset vertical velocity before jumping
+            rb.AddForce(new Vector2(jumpDir.x * chaseSpeed, jumpForce), ForceMode2D.Impulse);
+            isJumping = true;
+        }
+        else if (!shouldJump)
+        {
+            rb.linearVelocity = new Vector2(Mathf.Sign(dirX) * chaseSpeed, rb.linearVelocity.y);
+        }
+
+        if (isGrounded && isJumping)
+        {
+            isJumping = false;
+        }
+
         FlipTowardsPlayer(dirX);
 
         float distToWaypoint = Vector2.Distance(rb.position, targetPos);
