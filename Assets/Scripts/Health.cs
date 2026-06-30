@@ -9,8 +9,11 @@ public class Health : MonoBehaviour
     public event Action OnDeath;
     public event Action<float> OnHealthChanged; // Pass current health as parameter
 
+    [SerializeField] private bool immuneToPlainAttack = false;
     public float GetMaxHealth() => maxHealth;
     public float GetCurrentHealth() => currentHealth;
+
+    public bool IsImmuneToPlainAttack() => immuneToPlainAttack;
 
     private void Awake()
     {

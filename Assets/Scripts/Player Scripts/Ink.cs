@@ -13,7 +13,7 @@ public class Ink : MonoBehaviour
 
     private void Awake()
     {
-        currentInk = maxInk;
+        currentInk = 0;
     }
 
     public void UseInk(float amount)
@@ -22,6 +22,8 @@ public class Ink : MonoBehaviour
         {
             currentInk -= amount;
         }
+
+        OnInkChanged?.Invoke(currentInk / maxInk);
     }
 
     public void AddInk(float amount)
@@ -34,6 +36,8 @@ public class Ink : MonoBehaviour
         {
             currentInk += amount;
         }
+
+        OnInkChanged?.Invoke(currentInk / maxInk);
 
     }
 
