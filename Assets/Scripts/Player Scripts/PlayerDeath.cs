@@ -16,7 +16,8 @@ public class PlayerDeath : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
 
-        respawnPoint = transform.position; // Set initial respawn point to starting position
+        RespawnManager.Instance.SetStartPosition(transform.position); // Set initial respawn point to starting position
+
         Debug.Log(respawnPoint);
 
         health.OnDeath += HandleDeath; // Subscribe to death event
@@ -35,8 +36,8 @@ public class PlayerDeath : MonoBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
 
-        transform.position = respawnPoint;
-        //rb.position = Vector3.zero;
+        Vector3 respawnPosition = RespawnManager.Instance.GetRespawnPosition();
+        transform.position = respawnPosition;
         health.ResetHealth();
 
         rb.simulated = true; // on physics

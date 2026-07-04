@@ -18,7 +18,7 @@ public class Ink : MonoBehaviour
 
     public void UseInk(float amount)
     {
-        if (currentInk > amount)
+        if (currentInk >= amount)
         {
             currentInk -= amount;
         }

@@ -25,7 +25,7 @@ public class AttackHitbox : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"OnTriggerEnter2D fired | collider: {collision.name} | hitEnemiesThisSwing.Count: {enemiesHit.Count}");
+        //Debug.Log($"OnTriggerEnter2D fired | collider: {collision.name} | hitEnemiesThisSwing.Count: {enemiesHit.Count}");
         if (collision.gameObject.tag == "Enemy")
         {
             if (enemiesHit.Contains(collision.gameObject)) return;
@@ -34,7 +34,7 @@ public class AttackHitbox : MonoBehaviour
             
             if (!isInkAttack && enemyHealth.IsImmuneToPlainAttack())
             {
-                Debug.Log("Enemy immune to plain attacks");
+                //Debug.Log("Enemy immune to plain attacks");
                 return;
             }
             //playerInkStorage.UseInk(inkCostPerAttack);

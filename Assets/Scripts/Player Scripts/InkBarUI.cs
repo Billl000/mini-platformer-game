@@ -23,7 +23,7 @@ public class InkBarUI : MonoBehaviour
     void UpdateInkBar(float value)
     {
         slider.value = value;
-        inkText.text = value.ToString();
+        inkText.text = $"{inkCapacity.GetCurrentInk()}/{inkCapacity.GetMaxInk()}";
     }
 
     void OnDestroy()

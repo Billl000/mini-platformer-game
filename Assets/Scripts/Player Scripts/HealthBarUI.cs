@@ -11,7 +11,7 @@ public class HealthBarUI : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         healthText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        healthText.text = $"{playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
+        healthText.text = $"{playerHealth.GetMaxHealth()}/{playerHealth.GetMaxHealth()}";
     }
 
     void Start()
@@ -25,7 +25,7 @@ public class HealthBarUI : MonoBehaviour
     {
         slider.value = health;
 
-        healthText.text = health.ToString();
+        healthText.text = $"{playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
     }
 
     void OnDestroy()
