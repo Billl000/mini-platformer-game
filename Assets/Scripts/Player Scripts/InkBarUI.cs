@@ -10,7 +10,7 @@ public class InkBarUI : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         inkText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        inkText.text = $"{inkCapacity.GetCurrentInk()}/{inkCapacity.GetMaxInk()}";
+        //inkText.text = $"{inkCapacity.GetCurrentInk()}/{inkCapacity.GetMaxInk()}";
     }
 
     private void Start()
@@ -23,7 +23,7 @@ public class InkBarUI : MonoBehaviour
     void UpdateInkBar(float value)
     {
         slider.value = value;
-        inkText.text = $"{inkCapacity.GetCurrentInk()}/{inkCapacity.GetMaxInk()}";
+        //inkText.text = $"{inkCapacity.GetCurrentInk()}/{inkCapacity.GetMaxInk()}";
     }
 
     void OnDestroy()
