@@ -21,6 +21,15 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float coyoteTimeCounter;
 
+    [Header("Dashing")]
+    [SerializeField] private float dashForce = 15f;
+    [SerializeField] private float dashCooldown = 0f;
+    [SerializeField] private float dashCooldownDuration = 1f;
+    [SerializeField] private float dashDuration = 0.15f;
+
+    private bool isDashing = false;
+    private float dashTimer = 0f;
+
     private bool isKnockedback;
     private float knockbackTime = 0f;
     private float knockbackDuration = 0.5f;
@@ -60,6 +69,30 @@ public class PlayerController : MonoBehaviour
             coyoteTimeCounter = 0f;
         }
 
+        if (dashCooldown > 0f)
+            dashCooldown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldown <= 0f)
+        {
+            isDashing = true;
+            dashTimer = dashDuration;
+            dashCooldown = dashCooldownDuration;
+
+            // Dash in facing direction
+            float dashDir = spriteRenderer.flipX ? -1f : 1f;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); // reset Y
+            rb.AddForce(new Vector2(dashDir * dashForce, 0f), ForceMode2D.Impulse);
+
+        }
+
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0f)
+            {
+                isDashing = false;
+            }
+        }
         //i  have sprite 
         if (horizontalInput > 0f)
         {
@@ -71,6 +104,8 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = true;
             attackHitbox.localPosition = new Vector3(-0.6f, attackHitbox.localPosition.y, attackHitbox.localPosition.z);
         }
+
+
     }
 
     public void ApplyKnockback(Vector2 force)
@@ -83,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isKnockedback) return;
+        if (isKnockedback || isDashing) return;
       
         rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
     }

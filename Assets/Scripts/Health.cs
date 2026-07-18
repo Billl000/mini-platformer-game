@@ -25,6 +25,8 @@ public class Health : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
+        ScreenShake.instance?.Shake(0.5f); // Shake the screen with a default intensity of 0.5
+
         OnHealthChanged?.Invoke(currentHealth / maxHealth);
         if (currentHealth <= 0f)
         {
